@@ -12,6 +12,7 @@ public class UserDTO {
     private Long id;
     private String email;
     private String password;
+    private String confirmPassword;
     private String fullName;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;

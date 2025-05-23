@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,9 +8,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class OderDetailDTO {
+public class OrderDetailDTO {
     private Long id;
     private Long quantity;
     private BigDecimal price;
     private LocalDateTime orderDate;
+    private String productName;
 }

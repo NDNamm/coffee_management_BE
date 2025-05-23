@@ -22,13 +22,19 @@ public class Categories {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "image_url")
+    @Column(name = "cover_url")
     private String imageUrl;
 
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "category")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Product> product;
 

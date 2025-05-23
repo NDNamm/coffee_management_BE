@@ -2,9 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Enum.OrderStatus;
 import com.example.demo.model.OrderDetail;
-import com.example.demo.model.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import com.example.demo.model.Users;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +18,7 @@ public class OrderDTO {
     private BigDecimal totalAmount;
     private LocalDateTime orderDate;
     private OrderStatus status;
-    private User user;
-    private List<OrderDetail> orderDetail;
+    private Users users;
+    private List<OrderDetailDTO> orderDetailDTO;
+    private String userName;
 }

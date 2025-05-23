@@ -7,6 +7,7 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -16,6 +17,8 @@ public class CategoriesDTO {
     private String name;
     private String imageUrl;
     private String description;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private List<Product> product;
 
 }

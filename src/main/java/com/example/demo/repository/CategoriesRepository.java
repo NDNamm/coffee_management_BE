@@ -1,4 +1,23 @@
 package com.example.demo.repository;
 
-public interface CategoriesRepository {
+import com.example.demo.model.Categories;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface CategoriesRepository extends JpaRepository<Categories, Long> {
+    Optional<Categories> findByName(String name);
+
+    @Query("select c from Categories c where lower(c.name) like lower(concat('%', :nameCate, '%') ) ")
+    List<Categories> searchCategoriesByName(String nameCate);
+
+    @Query("select c from Categories c where lower(c.name) = lower(:nameCate)")
+    List<Categories> findCategoriesByName(String nameCate);
+
 }

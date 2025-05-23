@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +45,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Order> order;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Rating> rating;
 
 }

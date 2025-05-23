@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.model.Enum.ProductStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
@@ -31,6 +32,9 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "status")
+    private ProductStatus status;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -45,6 +49,14 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private List<Images> images;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private List<Rating> rating;
 
 
 }

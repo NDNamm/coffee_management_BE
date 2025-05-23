@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import com.example.demo.model.Enum.OrderStatus;
-import com.example.demo.repository.OrderDetailRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
@@ -15,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +36,7 @@ public class Order {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @JsonIgnore

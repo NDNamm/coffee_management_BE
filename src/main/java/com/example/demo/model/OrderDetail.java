@@ -25,6 +25,7 @@ public class OrderDetail {
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
