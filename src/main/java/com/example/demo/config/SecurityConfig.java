@@ -4,6 +4,8 @@ import com.example.demo.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -26,11 +29,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("api/auth/**", "/images/**", "api/category/**", "api/product/**",
-                                        "api/order/**").permitAll()
-//                        .requestMatchers("/api/**").hasAnyRole("ADMIN")
-//                        .requestMatchers("/public/**").hasAnyRole("ADMIN", "USER")
-                                .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/category/**",
+                                "/api/product/**", "/api/rating/**","/api/table/**","/api/order", "/api/orderDetail/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/order","/api/table/**", "api/cart/session/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/table/**", "/api/payment/**","api/cart/**").permitAll()
+                        .requestMatchers("/api/rating/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/**").hasAnyRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

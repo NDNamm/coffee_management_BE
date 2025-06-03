@@ -12,6 +12,12 @@ public class OrderDetailDTO {
     private Long id;
     private Long quantity;
     private BigDecimal price;
-    private LocalDateTime orderDate;
     private String productName;
+    private BigDecimal totalPrice;
+    private ProductDTO productDTO;
+    private String urlProductImage;
+
+    public BigDecimal getTotalPrice() {
+        return price.multiply(BigDecimal.valueOf(quantity));
+    }
 }

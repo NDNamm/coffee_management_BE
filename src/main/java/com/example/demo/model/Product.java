@@ -33,6 +33,7 @@ public class Product {
     private String description;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
     @Column(name = "created_at")
@@ -40,6 +41,9 @@ public class Product {
 
     @Column(name = "updated_at")
     private LocalDateTime updateAt;
+
+    @Column(name = "average_rating")
+    private BigDecimal averageRating;
 
     @ManyToOne
     @JsonIgnore
@@ -57,6 +61,10 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<Rating> rating;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private List<CartItems> cartItem;
 
 
 }

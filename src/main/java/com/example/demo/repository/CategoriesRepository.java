@@ -15,7 +15,7 @@ public interface CategoriesRepository extends JpaRepository<Categories, Long> {
     Optional<Categories> findByName(String name);
 
     @Query("select c from Categories c where lower(c.name) like lower(concat('%', :nameCate, '%') ) ")
-    List<Categories> searchCategoriesByName(String nameCate);
+    Page<Categories> searchCategoriesByName(String nameCate, Pageable pageable);
 
     @Query("select c from Categories c where lower(c.name) = lower(:nameCate)")
     List<Categories> findCategoriesByName(String nameCate);

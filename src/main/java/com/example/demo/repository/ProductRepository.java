@@ -16,11 +16,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByName(String name);
 
     @Query("select p from Product p where lower(p.name) like lower(concat('%', :namePro, '%') ) ")
-    List<Product> searchProductByName(String namePro);
+    Page<Product> searchProductByName(String namePro, Pageable pageable);
 
     @Query("select p from Product p where lower(p.name) = lower(:namePro)")
     List<Product> findProductByName(String namePro);
 
     @Query(value = "SELECT * FROM products ORDER BY RAND()", nativeQuery = true)
     Page<Product> findAllRandom(Pageable pageable);
+
+    List<Product> findProductsByCategoryId(Long categoryId);
 }

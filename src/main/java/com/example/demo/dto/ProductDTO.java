@@ -30,4 +30,5 @@ public class ProductDTO {
     private List<OrderDetail> orderDetails;
     private List<ImagesDTO> imagesDTO;
     private Long categoryId;
+    private BigDecimal averageRating;
 }

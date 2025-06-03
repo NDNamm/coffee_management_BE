@@ -13,5 +13,7 @@ public interface ProductService {
     void addProduct(ProductDTO productDTO, MultipartFile[] file, Long cateId);
     void updateProduct(ProductDTO productDTO, Long id, MultipartFile[] file);
     void deleteProduct(Long id);
-    List<ProductDTO> selectProductByName(String name);
+    Page<ProductDTO> searchProductByName(String name, int page, int size);
+    List<ProductDTO> searchProductByCateId(Long cateId);
+    ProductDTO searchProductById(Long id);
 }

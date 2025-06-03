@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,5 +24,8 @@ public class Tables {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private TableStatus status;
+
+    @OneToMany(mappedBy = "table")
+    private List<Order> orders;
 
 }

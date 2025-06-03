@@ -23,14 +23,14 @@ public class CategoriesController {
 
     @GetMapping("")
     ResponseEntity<Page<CategoriesDTO>> getAllCategory(@RequestParam(defaultValue = "0") int page,
-                                                       @RequestParam(defaultValue = "6") int size) {
+                                                       @RequestParam(defaultValue = "5") int size) {
 
         Page<CategoriesDTO> CategoryDTO = categoriesService.getAllCategories(page, size);
         return ResponseEntity.ok(CategoryDTO);
     }
 
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity addCategory(@RequestPart("categoryDTO") String categoriesJson,
+    public ResponseEntity<?> addCategory(@RequestPart("categoryDTO") String categoriesJson,
                                       @RequestPart("image") MultipartFile image) {
         try {
 
@@ -45,9 +45,9 @@ public class CategoriesController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity updateCategory(@PathVariable Long id,
+    public ResponseEntity<?> updateCategory(@PathVariable Long id,
                                             @RequestPart("categoryDTO") String categoriesJson,
-                                            @RequestPart("image") MultipartFile image) {
+                                            @RequestPart(value = "image", required = false) MultipartFile image) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             CategoriesDTO categoriesDTO = mapper.readValue(categoriesJson, CategoriesDTO.class);
@@ -60,17 +60,19 @@ public class CategoriesController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
 
         categoriesService.deleteCategories(id);
         return ResponseEntity.status(HttpStatus.OK).body("Delete danh muc thanh cong");
 
     }
 
-    @GetMapping("/select/{name}")
-    ResponseEntity<List<CategoriesDTO>> selectCategory(@PathVariable String name) {
+    @GetMapping("/search/{name}")
+    ResponseEntity<Page<CategoriesDTO>> selectCategory(@PathVariable String name,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "5") int size) {
 
-        List<CategoriesDTO> categoriesDTOS = categoriesService.selectCategoryByName(name);
+        Page<CategoriesDTO> categoriesDTOS = categoriesService.selectCategoryByName(name,page,size);
         return ResponseEntity.status(HttpStatus.OK).body(categoriesDTOS);
 
     }

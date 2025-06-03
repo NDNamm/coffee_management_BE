@@ -24,6 +24,7 @@ public class Payment {
     private BigDecimal amount;
 
     @Column(name = "payment_method")
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
     @OneToOne

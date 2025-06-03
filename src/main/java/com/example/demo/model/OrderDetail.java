@@ -23,8 +23,8 @@ public class OrderDetail {
     @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

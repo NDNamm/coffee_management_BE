@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AuthDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Users;
 import com.example.demo.service.AuthService;
@@ -14,9 +15,9 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDTO user) {
-        String token = authService.login(user);
-        return ResponseEntity.ok("token: " + authService.login(user));
+    public ResponseEntity<AuthDTO> login(@RequestBody UserDTO user) {
+        AuthDTO authDTO = authService.login(user);
+        return ResponseEntity.ok(authDTO);
     }
 
     @PostMapping("/register")

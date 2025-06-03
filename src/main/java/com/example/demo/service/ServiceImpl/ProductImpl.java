@@ -50,7 +50,7 @@ public class ProductImpl implements ProductService {
     @Override
     public Page<ProductDTO> getAllProducts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
-        Page<Product> products = productRepository.findAllRandom(pageable);
+        Page<Product> products = productRepository.findAll(pageable);
 
         return products.map(product -> {
             ProductDTO productDTO = new ProductDTO();
@@ -59,6 +59,7 @@ public class ProductImpl implements ProductService {
             productDTO.setPrice(product.getPrice());
             productDTO.setDescription(product.getDescription());
             productDTO.setStatus(product.getStatus());
+            productDTO.setAverageRating(product.getAverageRating());
             productDTO.setCreatedAt(product.getCreatedAt());
             productDTO.setUpdateAt(product.getUpdateAt());
 
@@ -118,35 +119,47 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(ProductDTO productDTO, Long id, MultipartFile[] file) {
+    public void updateProduct(ProductDTO productDTO, Long id, MultipartFile[] files) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("San pham k ton tai"));
-        try {
+                .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
 
-            List<Images> oldImages = product.getImages();
-            if (!oldImages.isEmpty() && oldImages != null) {
-                for (Images image : oldImages) {
-                    //Xoa anh cu
-                    cloudinary.uploader().destroy(image.getPublicId(), ObjectUtils.emptyMap());
-                    //Xoa o DB
-                    imagesRepository.delete(image);
-                }
-            }
+        try {
+            // Cập nhật thông tin sản phẩm
             product.setName(productDTO.getName());
             product.setPrice(productDTO.getPrice());
             product.setDescription(productDTO.getDescription());
-            product.setStatus(productDTO.getStatus());
-            List<Images> imageUrls = imageService.uploadProduct(file, productDTO.getName(), product);
-            String imageCover = imageUrls.get(0).getImageUrl();
-            product.setImageUrl(imageCover);
-            product.setCreatedAt(LocalDateTime.now());
-            product.setUpdateAt(LocalDateTime.now());
+
+            // Nếu status không null hoặc rỗng thì mới cập nhật
+            if (productDTO.getStatus() != null) {
+                product.setStatus(productDTO.getStatus());
+            }
+
+            // Nếu có ảnh mới thì mới xóa ảnh cũ và upload ảnh mới
+            if (files != null && files.length > 0) {
+                List<Images> oldImages = product.getImages();
+                if (oldImages != null && !oldImages.isEmpty()) {
+                    for (Images image : oldImages) {
+                        // Xoá ảnh cũ ở Cloudinary
+                        cloudinary.uploader().destroy(image.getPublicId(), ObjectUtils.emptyMap());
+                        // Xoá ảnh cũ trong DB
+                        imagesRepository.delete(image);
+                    }
+                }
+
+                // Upload ảnh mới
+                List<Images> imageUrls = imageService.uploadProduct(files, productDTO.getName(), product);
+                String imageCover = imageUrls.get(0).getImageUrl();
+                product.setImageUrl(imageCover);
+            }
+
+            product.setUpdateAt(LocalDateTime.now()); // chỉ cập nhật updateAt
             productRepository.save(product);
 
         } catch (IOException e) {
-            throw new RuntimeException("Loi up anh:" + e.getMessage());
+            throw new RuntimeException("Lỗi upload ảnh: " + e.getMessage());
         }
     }
+
 
     @Override
     public void deleteProduct(Long id) {
@@ -171,15 +184,53 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> selectProductByName(String name) {
+    public Page<ProductDTO> searchProductByName(String name, int page , int size) {
 
-        List<Product> products = productRepository.searchProductByName(name);
+        Pageable pageable = PageRequest.of(page, size ,Sort.by("id").ascending());
+        Page<Product> products = productRepository.searchProductByName(name, pageable);
+        return products.map(
+                product -> {
+                    ProductDTO productDTO = new ProductDTO();
+                    productDTO.setId(product.getId());
+                    productDTO.setName(product.getName());
+                    productDTO.setPrice(product.getPrice());
+                    productDTO.setStatus(product.getStatus());
+                    productDTO.setAverageRating(product.getAverageRating());
+                    productDTO.setDescription(product.getDescription());
+                    List<Images> images = product.getImages();
+                    if (images != null && !images.isEmpty()) {
+                        productDTO.setImageUrl(images.get(0).getImageUrl());
+                        List<ImagesDTO> imageDTOs = images.stream()
+                                .map(img -> {
+                                    ImagesDTO imgDto = new ImagesDTO();
+                                    imgDto.setId(img.getId());
+                                    imgDto.setPublicId(img.getPublicId());
+                                    imgDto.setImageUrl(img.getImageUrl());
+                                    return imgDto;
+                                })
+                                .collect(Collectors.toList());
+                        productDTO.setImagesDTO(imageDTOs);
+
+                    }
+                    productDTO.setCreatedAt(product.getCreatedAt());
+                    productDTO.setUpdateAt(product.getUpdateAt());
+                    productDTO.setCategoryId(product.getCategory().getId());
+                    return productDTO;
+                }
+        );
+    }
+
+    @Override
+    public List<ProductDTO> searchProductByCateId(Long cateId) {
+        List<Product> products = productRepository.findProductsByCategoryId(cateId);
         return products.stream().map(
                 product -> {
                     ProductDTO productDTO = new ProductDTO();
                     productDTO.setId(product.getId());
                     productDTO.setName(product.getName());
                     productDTO.setPrice(product.getPrice());
+                    productDTO.setStatus(product.getStatus());
+                    productDTO.setAverageRating(product.getAverageRating());
                     productDTO.setDescription(product.getDescription());
                     List<Images> images = product.getImages();
                     if (images != null && !images.isEmpty()) {
@@ -202,5 +253,40 @@ public class ProductImpl implements ProductService {
                     return productDTO;
                 }
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDTO searchProductById(Long id) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("San pham k ton tai"));
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(product.getId());
+        productDTO.setName(product.getName());
+        productDTO.setPrice(product.getPrice());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setStatus(product.getStatus());
+        productDTO.setAverageRating(product.getAverageRating());
+        List<Images> images = product.getImages();
+        if (images != null && !images.isEmpty()) {
+            // Ảnh đại diện là ảnh đầu tiên
+            productDTO.setImageUrl(images.get(0).getImageUrl());
+
+            // Danh sách ảnh DTO
+            List<ImagesDTO> imageDTOs = images.stream()
+                    .map(img -> {
+                        ImagesDTO imgDto = new ImagesDTO();
+                        imgDto.setId(img.getId());
+                        imgDto.setPublicId(img.getPublicId());
+                        imgDto.setImageUrl(img.getImageUrl());
+                        return imgDto;
+                    })
+                    .collect(Collectors.toList());
+            productDTO.setImagesDTO(imageDTOs);
+
+        }
+        productDTO.setCategoryId(product.getCategory().getId());
+        return productDTO;
     }
 }

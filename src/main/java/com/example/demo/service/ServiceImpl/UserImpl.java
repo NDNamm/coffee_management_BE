@@ -38,6 +38,7 @@ public class UserImpl implements UserService {
             userDTO.setId(users.getId());
             userDTO.setEmail(users.getEmail());
             userDTO.setPassword(users.getPassword());
+            userDTO.setPhone(users.getPhone());
             userDTO.setCreatedAt(users.getCreatedAt());
             userDTO.setUpdateAt(users.getUpdateAt());
             return userDTO;
@@ -57,9 +58,14 @@ public class UserImpl implements UserService {
             throw new RuntimeException("Password Not Matched");
         }
 
+        if(userRepository.findUsersByPhone(userDTO.getPhone()).isPresent()) {
+            throw new RuntimeException("Phone user already exists");
+        }
+
         Users user = new Users();
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setPhone(userDTO.getPhone());
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdateAt(LocalDateTime.now());
         user.setRole(role);
@@ -71,7 +77,14 @@ public class UserImpl implements UserService {
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tai khoan khong ton tai"));
 
-        user.setEmail(userDTO.getEmail());
+        if(userRepository.findUsersByPhone(userDTO.getPhone()).isPresent()) {
+            throw new RuntimeException("Phone user already exists");
+        }
+
+        if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+            throw new RuntimeException("Password Not Matched");
+        }
+        user.setPhone(userDTO.getPhone());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUpdateAt(LocalDateTime.now());
         userRepository.save(user);

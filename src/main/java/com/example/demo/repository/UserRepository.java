@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
       Optional<Users> findUserByEmail(String email);
 
+      Optional<Users> findUsersByPhone(String phone);
+
       @Query("select u from Users u where  lower(u.email) like lower(concat('%', :key,'%') )" +
               " or lower(u.fullName) like lower(concat('%', :key, '%') ) ")
       Page<Users> findUsersByFullNameOrEmail(@Param("key") String key, Pageable pageable);
