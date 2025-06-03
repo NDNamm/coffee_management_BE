@@ -37,15 +37,15 @@ public class CategoriesImpl implements CategoriesService {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
         Page<Categories> categories = categoriesRepository.findAll(pageable);
 
-        return categories.map(categories1 -> {
-            CategoriesDTO categoriesDTO = new CategoriesDTO();
-            categoriesDTO.setId(categories1.getId());
-            categoriesDTO.setName(categories1.getName());
-            categoriesDTO.setImageUrl(categories1.getImageUrl());
-            categoriesDTO.setDescription(categories1.getDescription());
-            categoriesDTO.setCreatedAt(categories1.getCreatedAt());
-            categoriesDTO.setUpdatedAt(categories1.getUpdatedAt());
-            return categoriesDTO;
+        return categories.map(cate -> {
+            CategoriesDTO dto = new CategoriesDTO();
+            dto.setId(cate.getId());
+            dto.setName(cate.getName());
+            dto.setImageUrl(cate.getImageUrl());
+            dto.setDescription(cate.getDescription());
+            dto.setCreatedAt(cate.getCreatedAt());
+            dto.setUpdatedAt(cate.getUpdatedAt());
+            return dto;
         });
     }
 
@@ -78,8 +78,10 @@ public class CategoriesImpl implements CategoriesService {
         try {
             categories.setName(categoriesDTO.getName());
             categories.setDescription(categoriesDTO.getDescription());
-            String url = imageService.uploadCate(file);
-            categories.setImageUrl(url);
+            if(file !=null && !file.isEmpty()){
+                String url = imageService.uploadCate(file);
+                categories.setImageUrl(url);
+            }
             categories.setDescription(categoriesDTO.getDescription());
             categories.setUpdatedAt(LocalDateTime.now());
             categoriesRepository.save(categories);
@@ -98,24 +100,24 @@ public class CategoriesImpl implements CategoriesService {
     }
 
     @Override
-    public List<CategoriesDTO> selectCategoryByName(String name) {
-        List<Categories> categories = categoriesRepository.searchCategoriesByName(name);
+    public Page<CategoriesDTO> selectCategoryByName(String name, int page, int size) {
 
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        Page<Categories> categories = categoriesRepository.searchCategoriesByName(name,pageable);
         if (categories.isEmpty()) {
             throw new RuntimeException("Danh muc k ton tai");
         }
-        return categories.stream().map(
-                categories1 -> {
-                    CategoriesDTO categoriesDTO = new CategoriesDTO();
-                    categoriesDTO.setId(categories1.getId());
-                    categoriesDTO.setName(categories1.getName());
-                    categoriesDTO.setDescription(categories1.getDescription());
-                    categoriesDTO.setImageUrl(categories1.getImageUrl());
-                    categoriesDTO.setCreatedAt(categories1.getCreatedAt());
-                    categoriesDTO.setUpdatedAt(categories1.getUpdatedAt());
-                    return categoriesDTO;
-                }
-        ).collect(Collectors.toList());
+
+        return categories.map(cate -> {
+            CategoriesDTO dto = new CategoriesDTO();
+            dto.setId(cate.getId());
+            dto.setName(cate.getName());
+            dto.setImageUrl(cate.getImageUrl());
+            dto.setDescription(cate.getDescription());
+            dto.setCreatedAt(cate.getCreatedAt());
+            dto.setUpdatedAt(cate.getUpdatedAt());
+            return dto;
+        });
     }
 
 }

@@ -48,8 +48,8 @@ public class ProductController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Long id,
-                                           @RequestPart("categoryDTO") String productJson,
-                                           @RequestPart("image") MultipartFile[] image) {
+                                           @RequestPart("productDTO") String productJson,
+                                           @RequestPart(value = "image", required = false) MultipartFile[] image) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             ProductDTO productDTO = mapper.readValue(productJson, ProductDTO.class);
@@ -62,19 +62,33 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
 
         productService.deleteProduct(id);
         return ResponseEntity.status(HttpStatus.OK).body("Delete san pham thanh cong");
 
     }
 
-    @GetMapping("/select/{name}")
-    ResponseEntity<List<ProductDTO>> selectProduct(@PathVariable String name) {
+    @GetMapping("/search")
+    ResponseEntity<Page<ProductDTO>> selectProduct(@RequestParam String name,
+                                                   @RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "6") int size) {
 
-        List<ProductDTO> productDTOS = productService.selectProductByName(name);
+        Page<ProductDTO> productDTOS = productService.searchProductByName(name, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(productDTOS);
 
+    }
+    @GetMapping("/select/{cateId}")
+    ResponseEntity<List<ProductDTO>> selectProductByCateId(@PathVariable Long cateId) {
+
+        List<ProductDTO> productDTOS = productService.searchProductByCateId(cateId);
+        return ResponseEntity.status(HttpStatus.OK).body(productDTOS);
+
+    }
+
+    @GetMapping("{productId}")
+    ResponseEntity<ProductDTO> getProduct(@PathVariable Long productId) {
+        return ResponseEntity.ok(productService.searchProductById(productId));
     }
 
 }

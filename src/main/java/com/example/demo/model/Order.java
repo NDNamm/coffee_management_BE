@@ -20,6 +20,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "session_id")
+    private String sessionId;
+
     @Column(name = "name")
     private String name;
 
@@ -33,6 +36,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name = "note")
+    private String note;
+
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -44,5 +51,9 @@ public class Order {
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
+
+    @ManyToOne
+    @JoinColumn(name = "table_id")
+    private Tables table;
 
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service.ServiceImpl;
 
+import com.example.demo.dto.AuthDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Role;
 import com.example.demo.model.Users;
@@ -31,14 +32,14 @@ public class AuthServiceImpl implements AuthService {
     private JwtUtils jwtUtils;
 
     @Override
-    public String login(UserDTO userDTO) {
+    public AuthDTO login(UserDTO userDTO) {
         Users user = userRepository.findUserByEmail(userDTO.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("Email Not Found"));
 
         if (passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
             String token = jwtUtils.generateToken(user.getEmail(), user.getRole().getName());
             System.out.println("token: " + token);
-            return token;
+            return new AuthDTO(token, user.getId(), user.getFullName(), user.getPhone(), user.getRole().getName());
         } else {
             throw new UsernameNotFoundException("tk hoac mk sai");
         }

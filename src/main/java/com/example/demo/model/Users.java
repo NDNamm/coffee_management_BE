@@ -31,6 +31,9 @@ public class Users {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -49,5 +52,10 @@ public class Users {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Rating> rating;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Carts> cart;
+
 
 }

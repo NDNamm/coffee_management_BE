@@ -11,6 +11,6 @@ public interface CategoriesService {
     void addCategories(CategoriesDTO categoriesDTO, MultipartFile file);
     void updateCategories(CategoriesDTO categoriesDTO, Long id, MultipartFile file);
     void deleteCategories(Long id);
-    List<CategoriesDTO> selectCategoryByName(String name);
+    Page<CategoriesDTO> selectCategoryByName(String name, int page, int size);
 
 }
