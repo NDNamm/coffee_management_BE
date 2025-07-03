@@ -2,6 +2,7 @@ package com.example.coffee.management.service.impl;
 
 import com.example.coffee.management.dto.CartDTO;
 import com.example.coffee.management.dto.CartItemDTO;
+import com.example.coffee.management.dto.ProductDTO;
 import com.example.coffee.management.exception.AppException;
 import com.example.coffee.management.exception.ErrorCode;
 import com.example.coffee.management.model.CartItems;
@@ -15,6 +16,8 @@ import com.example.coffee.management.repository.CartRepository;
 import com.example.coffee.management.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,6 +30,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
+    private static final Logger log = LoggerFactory.getLogger(CartServiceImpl.class);
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
@@ -205,13 +209,23 @@ public class CartServiceImpl implements CartService {
     //Ham chung
     private CartDTO getCartDTO(Carts cart, CartDTO cartDTO) {
         List<CartItemDTO> cartItemDTOS = new ArrayList<>();
+
         for (CartItems items : cart.getItems()) {
+            Product product = items.getProduct();
+            ProductDTO productDTO = ProductDTO.builder()
+                    .id(product.getId())
+                    .namePro(product.getNamePro())
+                    .imageUrl(product.getImageUrl())
+                    .price(product.getPrice())
+                    .build();
+
             CartItemDTO cartItemDTO = CartItemDTO.builder()
                     .id(items.getId())
                     .productId(items.getProduct().getId())
                     .quantity(items.getQuantity())
                     .price(items.getPrice())
                     .totalPrice(items.getTotalPrice())
+                    .product(productDTO)
                     .build();
             cartItemDTOS.add(cartItemDTO);
         }

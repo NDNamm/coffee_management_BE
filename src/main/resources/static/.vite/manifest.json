@@ -1,0 +1,284 @@
+{
+  "_ConfirmDialog-CgZmBqnd.js": {
+    "file": "assets/ConfirmDialog-CgZmBqnd.js",
+    "name": "ConfirmDialog",
+    "imports": [
+      "_chunk-DQRVZFIR-CDtcAPRC.js"
+    ]
+  },
+  "_Header-D-1lqB9W.js": {
+    "file": "assets/Header-D-1lqB9W.js",
+    "name": "Header",
+    "imports": [
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_iconBase-BIXBbqyS.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "_SideBar-CPVLx_RP.js": {
+    "file": "assets/SideBar-CPVLx_RP.js",
+    "name": "SideBar",
+    "imports": [
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_ConfirmDialog-CgZmBqnd.js"
+    ]
+  },
+  "_chunk-DQRVZFIR-CDtcAPRC.js": {
+    "file": "assets/chunk-DQRVZFIR-CDtcAPRC.js",
+    "name": "chunk-DQRVZFIR"
+  },
+  "_dialog-Yo9MHd0L.js": {
+    "file": "assets/dialog-Yo9MHd0L.js",
+    "name": "dialog",
+    "imports": [
+      "_iconBase-BIXBbqyS.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_index-BRZMWsSF.js"
+    ]
+  },
+  "_iconBase-BIXBbqyS.js": {
+    "file": "assets/iconBase-BIXBbqyS.js",
+    "name": "iconBase",
+    "imports": [
+      "_chunk-DQRVZFIR-CDtcAPRC.js"
+    ]
+  },
+  "_index-BRZMWsSF.js": {
+    "file": "assets/index-BRZMWsSF.js",
+    "name": "index",
+    "imports": [
+      "_chunk-DQRVZFIR-CDtcAPRC.js"
+    ]
+  },
+  "_index-VWaDGczM.js": {
+    "file": "assets/index-VWaDGczM.js",
+    "name": "index"
+  },
+  "_with-props-CIDimU0D.js": {
+    "file": "assets/with-props-CIDimU0D.js",
+    "name": "with-props",
+    "imports": [
+      "_chunk-DQRVZFIR-CDtcAPRC.js"
+    ]
+  },
+  "app/root.tsx?__react-router-build-client-route": {
+    "file": "assets/root-BGtkDzEC.js",
+    "name": "root",
+    "src": "app/root.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js"
+    ],
+    "css": [
+      "assets/root-DMObc02E.css"
+    ]
+  },
+  "app/routes/CartPage.tsx?__react-router-build-client-route": {
+    "file": "assets/CartPage-BgwSS1gz.js",
+    "name": "CartPage",
+    "src": "app/routes/CartPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_Header-D-1lqB9W.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/CategoryPage.tsx?__react-router-build-client-route": {
+    "file": "assets/CategoryPage-Bcg6DPvu.js",
+    "name": "CategoryPage",
+    "src": "app/routes/CategoryPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_Header-D-1lqB9W.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/Dashboard.tsx?__react-router-build-client-route": {
+    "file": "assets/Dashboard-WvKXSmiO.js",
+    "name": "Dashboard",
+    "src": "app/routes/Dashboard.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_SideBar-CPVLx_RP.js"
+    ]
+  },
+  "app/routes/HomePage.tsx?__react-router-build-client-route": {
+    "file": "assets/HomePage-BBW8rgNh.js",
+    "name": "HomePage",
+    "src": "app/routes/HomePage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_Header-D-1lqB9W.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/LoginPage.tsx?__react-router-build-client-route": {
+    "file": "assets/LoginPage-BHN1Ao3U.js",
+    "name": "LoginPage",
+    "src": "app/routes/LoginPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_Header-D-1lqB9W.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/OrderDetailPage.tsx?__react-router-build-client-route": {
+    "file": "assets/OrderDetailPage-BS5_Papw.js",
+    "name": "OrderDetailPage",
+    "src": "app/routes/OrderDetailPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_Header-D-1lqB9W.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/OrderPage.tsx?__react-router-build-client-route": {
+    "file": "assets/OrderPage-V-rMLeKp.js",
+    "name": "OrderPage",
+    "src": "app/routes/OrderPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_Header-D-1lqB9W.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/ProductPage.tsx?__react-router-build-client-route": {
+    "file": "assets/ProductPage-EDej3UJK.js",
+    "name": "ProductPage",
+    "src": "app/routes/ProductPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_Header-D-1lqB9W.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/RegisterPage.tsx?__react-router-build-client-route": {
+    "file": "assets/RegisterPage-B8_hAeFT.js",
+    "name": "RegisterPage",
+    "src": "app/routes/RegisterPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_Header-D-1lqB9W.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/SearchProductPage.tsx?__react-router-build-client-route": {
+    "file": "assets/SearchProductPage-zBqBT1DE.js",
+    "name": "SearchProductPage",
+    "src": "app/routes/SearchProductPage.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_Header-D-1lqB9W.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-VWaDGczM.js"
+    ]
+  },
+  "app/routes/admin/Category.tsx?__react-router-build-client-route": {
+    "file": "assets/Category-Civ9wLQL.js",
+    "name": "Category",
+    "src": "app/routes/admin/Category.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_SideBar-CPVLx_RP.js",
+      "_dialog-Yo9MHd0L.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-BRZMWsSF.js"
+    ]
+  },
+  "app/routes/admin/Order.tsx?__react-router-build-client-route": {
+    "file": "assets/Order-C-WlHqMt.js",
+    "name": "Order",
+    "src": "app/routes/admin/Order.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_dialog-Yo9MHd0L.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_SideBar-CPVLx_RP.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-BRZMWsSF.js"
+    ]
+  },
+  "app/routes/admin/Product.tsx?__react-router-build-client-route": {
+    "file": "assets/Product-DlgdHjAn.js",
+    "name": "Product",
+    "src": "app/routes/admin/Product.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_dialog-Yo9MHd0L.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_SideBar-CPVLx_RP.js",
+      "_iconBase-BIXBbqyS.js",
+      "_index-BRZMWsSF.js"
+    ]
+  },
+  "app/routes/admin/Users.tsx?__react-router-build-client-route": {
+    "file": "assets/Users-BEsoXouh.js",
+    "name": "Users",
+    "src": "app/routes/admin/Users.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_with-props-CIDimU0D.js",
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_index-VWaDGczM.js",
+      "_ConfirmDialog-CgZmBqnd.js",
+      "_SideBar-CPVLx_RP.js"
+    ]
+  },
+  "node_modules/@react-router/dev/dist/config/defaults/entry.client.tsx": {
+    "file": "assets/entry.client-C4KczYrR.js",
+    "name": "entry.client",
+    "src": "node_modules/@react-router/dev/dist/config/defaults/entry.client.tsx",
+    "isEntry": true,
+    "imports": [
+      "_chunk-DQRVZFIR-CDtcAPRC.js",
+      "_index-BRZMWsSF.js"
+    ]
+  }
+}

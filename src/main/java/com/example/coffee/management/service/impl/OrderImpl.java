@@ -47,7 +47,6 @@ public class OrderImpl implements OrderService {
 
         return orders.map(order -> OrderDTO.builder()
                 .id(order.getId())
-                .name(order.getName())
                 .totalAmount(order.getTotalAmount())
                 .status(order.getStatus())
                 .note(order.getNote())
@@ -78,9 +77,6 @@ public class OrderImpl implements OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
 
-        if (orderDTO.getName() != null && !orderDTO.getName().isEmpty()) {
-            order.setName(orderDTO.getName());
-        }
         order.setStatus(orderDTO.getStatus());
         orderRepository.save(order);
     }
@@ -100,7 +96,6 @@ public class OrderImpl implements OrderService {
 
         return orders.map(order -> OrderDTO.builder()
                 .id(order.getId())
-                .name(order.getName())
                 .orderDate(order.getOrderDate())
                 .status(order.getStatus())
                 .totalAmount(order.getTotalAmount())
@@ -133,7 +128,6 @@ public class OrderImpl implements OrderService {
 
 
         Order order = new Order();
-        order.setName(user != null ? user.getFullName() : orderDTO.getName());
         order.setUser(user);
         order.setSessionId(user == null ? sessionId : null);
         order.setOrderDate(LocalDateTime.now());
@@ -150,8 +144,10 @@ public class OrderImpl implements OrderService {
 
         orderRepository.save(order);
 
+        String receiverName = user != null ? user.getFullName() : orderDTO.getAddressDTO().getReceiverName();
+
         Address address = Address.builder()
-                .receiverName(orderDTO.getAddressDTO().getReceiverName())
+                .receiverName(receiverName)
                 .city(orderDTO.getAddressDTO().getCity())
                 .district(orderDTO.getAddressDTO().getDistrict())
                 .commune(orderDTO.getAddressDTO().getCommune())
@@ -201,7 +197,6 @@ public class OrderImpl implements OrderService {
 
         return orders.map(order -> OrderDTO.builder()
                 .id(order.getId())
-                .name(order.getName())
                 .totalAmount(order.getTotalAmount())
                 .status(order.getStatus())
                 .note(order.getNote())
@@ -264,9 +259,6 @@ public class OrderImpl implements OrderService {
     }
 
     private void updateOrderInfo(Order order, OrderDTO dto) {
-        if (dto.getName() != null && !dto.getName().isBlank()) {
-            order.setName(dto.getName());
-        }
         if (dto.getNote() != null) {
             order.setNote(dto.getNote());
         }

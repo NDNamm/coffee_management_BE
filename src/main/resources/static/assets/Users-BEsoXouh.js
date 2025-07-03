@@ -1,0 +1,1 @@
+import{w as o}from"./with-props-CIDimU0D.js";import{o as r}from"./chunk-DQRVZFIR-CDtcAPRC.js";import"./index-VWaDGczM.js";import"./ConfirmDialog-CgZmBqnd.js";import{S as s}from"./SideBar-CPVLx_RP.js";const a=o(function(){return r.jsx(r.Fragment,{children:r.jsx("div",{children:r.jsx(s,{})})})});export{a as default};

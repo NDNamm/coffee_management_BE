@@ -25,9 +25,6 @@ public class Order {
     @Column(name = "session_id")
     private String sessionId;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
     @Column(name = "total_amount", precision = 10, scale = 2)
     private BigDecimal totalAmount;
 

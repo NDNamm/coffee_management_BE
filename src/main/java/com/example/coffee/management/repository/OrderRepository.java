@@ -8,12 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query("select o from Order o where lower(o.name) like lower(concat('%', :key , '%')) ")
+    @Query("select o from Order o where lower(o.address.receiverName) like lower(concat('%', :key , '%')) ")
     Page<Order> searchOrderByNameOrUserFullName(@Param("key") String key, Pageable pageable);
 
 

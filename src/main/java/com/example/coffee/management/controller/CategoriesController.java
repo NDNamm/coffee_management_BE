@@ -5,6 +5,8 @@ import com.example.coffee.management.dto.CategoriesDTO;
 import com.example.coffee.management.service.CategoriesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/category")
 public class CategoriesController {
 
+    private static final Logger log = LoggerFactory.getLogger(CategoriesController.class);
     private final CategoriesService categoriesService;
 
     @GetMapping("")
