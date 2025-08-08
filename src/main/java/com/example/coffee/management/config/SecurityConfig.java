@@ -40,7 +40,7 @@ public class SecurityConfig {
 
                         // Các quyền cần role
                         .requestMatchers("/api/rating/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/**").hasRole("ADMIN") // Quan trọng: dòng này sẽ chặn mọi "/api/..." nếu không nằm phía trên
+                        .requestMatchers("/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

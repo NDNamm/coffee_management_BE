@@ -15,4 +15,5 @@ public class AuthDTO {
     private String fullName;
     private String phoneNumber;
     private String nameRole;
+    private String refreshToken;
 }

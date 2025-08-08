@@ -10,8 +10,12 @@ import com.example.coffee.management.repository.RoleRepository;
 import com.example.coffee.management.repository.UserRepository;
 import com.example.coffee.management.security.JwtUtils;
 import com.example.coffee.management.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import jakarta.servlet.http.Cookie;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,18 +33,25 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
 
     @Override
-    public AuthDTO login(UserDTO userDTO) {
+    public AuthDTO login(UserDTO userDTO, HttpServletResponse response) {
         Users user = userRepository.findUserByEmail(userDTO.getEmail())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         if (passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            String token = jwtUtils.generateToken(user.getEmail(), user.getRole().getRoleName());
-            log.info("token: " + token);
-            return new AuthDTO(token, user.getId(), user.getFullName(), user.getPhoneNumber(), user.getRole().getRoleName());
+            String accessToken = jwtUtils.generateToken(user.getEmail(), user.getRole().getRoleName());
+
+            String refreshToken = jwtUtils.generateRefreshToken(user.getEmail());
+            Cookie cookie = new Cookie("refresh_token", refreshToken);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            cookie.setSecure(true);
+            cookie.setMaxAge(7 * 24 * 60 * 60);;
+            response.addCookie(cookie);
+
+            return new AuthDTO(accessToken, user.getId(), user.getFullName(), user.getPhoneNumber(), user.getRole().getRoleName(), refreshToken);
         } else {
             throw new UsernameNotFoundException("The username or password is incorrect");
         }
-
     }
 
     @Override
@@ -67,5 +78,42 @@ public class AuthServiceImpl implements AuthService {
                 .role(role)
                 .build();
         userRepository.save(user);
+    }
+
+    @Override
+    public void logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refresh_token", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+
+        response.addCookie(cookie);
+    }
+
+    @Override
+    public AuthDTO refresh(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies == null) {
+            throw new AppException(ErrorCode.UNAUTHORIZED);
+        }
+
+        String refreshToken = null;
+        for (Cookie cookie : cookies) {
+            if("refresh_token".equals(cookie.getName())) {
+                refreshToken = cookie.getValue();
+            }
+        }
+
+        if(refreshToken == null) {
+            throw new AppException(ErrorCode.UNAUTHORIZED);
+        }
+
+        String email = jwtUtils.getEmail(refreshToken);
+        Users user = userRepository.findUserByEmail(email)
+               .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+
+        String newAccessToken = jwtUtils.generateToken(user.getEmail(), user.getRole().getRoleName());
+        return new AuthDTO(newAccessToken, user.getId(), user.getFullName(), user.getPhoneNumber(), user.getRole().getRoleName(), refreshToken) ;
     }
 }
